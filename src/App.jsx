@@ -4,6 +4,7 @@ import mqtt from 'mqtt';
 import './index.css';
 import SidebarMenu from './components/SidebarMenu';
 import { Route, Routes } from 'react-router-dom';
+import Panel from './components/Panel';
 
 function App() {
   const [messages, setMessages] = useState([]);
@@ -62,7 +63,7 @@ function App() {
     <div className='flex'>
       <SidebarMenu/>
       <Routes>
-        <Route path="/" element={<h1>/</h1>} />
+        <Route path="/" element={<Panel/>} />
         <Route path="/config" element={<h1>/config</h1>} />
         <Route path="/graphs" element={<h1>/graphs</h1>} />
       </Routes>
