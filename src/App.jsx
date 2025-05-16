@@ -1,7 +1,9 @@
 // App.jsx
 import { useEffect, useState } from 'react';
 import mqtt from 'mqtt';
-import './App.css';
+import './index.css';
+import SidebarMenu from './components/SidebarMenu';
+import { Route, Routes } from 'react-router-dom';
 
 function App() {
   const [messages, setMessages] = useState([]);
@@ -37,7 +39,8 @@ function App() {
       if (topic === routingKey) {
         try {
           const json = JSON.parse(message.toString());
-          setMessages((prev) => [json.message, ...prev]);
+          setMessages((prev) => [json, ...prev]);
+          
         } catch (e) {
           console.warn('Invalid JSON:', message.toString());
         }
@@ -56,12 +59,18 @@ function App() {
   }, []);
 
   return (
-    <div>
+    <div className='flex'>
+      <SidebarMenu/>
+      <Routes>
+        <Route path="/" element={<h1>/</h1>} />
+        <Route path="/config" element={<h1>/config</h1>} />
+        <Route path="/graphs" element={<h1>/graphs</h1>} />
+      </Routes>
       <h1>Mensajes MQTT</h1>
       <ul>
-        {messages.map((msg, i) => (
-          <li key={i}>{msg}</li>
-        ))}
+        {messages.map((msg, i) => 
+          <li key={i}>{msg.Temp}</li>
+      )}
       </ul>
     </div>
   );
